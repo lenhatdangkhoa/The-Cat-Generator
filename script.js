@@ -1,6 +1,17 @@
 document.getElementById("generate").addEventListener("click", () => {
-  console.log("testing");
-  test = document.createElement("div");
-  test.innerHTML = "hello";
-  document.body.append(test);
+  picture = document.createElement("img");
+  getImage().then((url) => {
+    picture.src = url;
+    document.body.appendChild(picture);
+  });
 });
+
+async function getImage() {
+  try {
+    res = await fetch("https://api.thecatapi.com/v1/images/search");
+    res = await res.json();
+    return res[0]["url"];
+  } catch {
+    console.log("Error");
+  }
+}
